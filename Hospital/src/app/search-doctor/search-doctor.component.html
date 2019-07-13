@@ -1,0 +1,12 @@
+<div>
+  <input type="text" class="form-control" placeholder="Search" name='search' (input)="findPeople($event)">
+
+  <div *ngFor="let doctor of doctors" class="search">
+    <a [routerLink]="['/doctor',doctor.id]">
+      <p>{{doctor.name}}</p>
+      <p>{{doctor.surname}}</p>
+      <p>{{doctor.department.label}}</p> <br>
+    </a>
+  </div>
+
+</div>

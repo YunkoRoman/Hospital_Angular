@@ -1,0 +1,25 @@
+
+<!--<form #loginForm="ngForm" (ngSubmit)=loginUser(loginForm.form.value) (click)="goToHome()">-->
+<!--  <input type="email" name="email" placeholder="Email" required ngModel>-->
+<!--  <input type="password" name="password" placeholder="password" required ngModel>-->
+<!--  <br>-->
+<!--  <input type="submit" value="Увійти"   >-->
+<!--</form>-->
+
+<div class="login-page" xmlns="http://www.w3.org/1999/html">
+  <div class="form">
+<!--    <form class="register-form">-->
+<!--      <input type="text" placeholder="name"/>-->
+<!--      <input type="password" placeholder="password"/>-->
+<!--      <input type="text" placeholder="email address"/>-->
+<!--      <button>create</button>-->
+<!--      <p class="message">Already registered? <a href="#">Sign In</a></p>-->
+<!--    </form>-->
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)=loginUser()>
+      <input  type="email" formControlName="email" placeholder="Email" />
+      <input type="password" formControlName="password" placeholder="password"  />
+      <button [disabled]="loading" > Увійти </button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>
+  </div>
+</div>

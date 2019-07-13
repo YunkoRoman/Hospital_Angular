@@ -1,0 +1,8 @@
+.Head{
+  display: flex;
+  justify-content: space-between;
+
+  background: #00BFFF;
+  width: 100%;
+  height: 50px;
+}

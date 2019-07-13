@@ -1,0 +1,47 @@
+
+
+<div>
+
+  <p>Ім'я:{{doctor.name}}</p>
+  <p> Прізвище: {{doctor.surname}}</p>
+  <p> Email: {{doctor.email}}</p>
+  <p> Мобільний номер:{{doctor.phone_number}}</p>
+  <p> Поверх:{{doctor.floor}}</p>
+  <p> Кабінет:{{doctor.office}}</p>
+  <p> Досвід: {{doctor.work_experience}} років</p>
+  <p> Опис:{{doctor.description}}</p>
+  <p> Відділ:{{doctor.department.label}}</p>
+
+</div>
+<br>
+<h1>Коментарі:</h1>
+<div *ngFor="let coment of allcomments">
+  <p>{{coment.data | date:'dd.MM.y HH:mm'}}</p>
+  <p>{{coment.text}}</p>
+  <button (click)="DeleteComment(coment.id)" *ngIf="currentUserId == coment.user_id">Delete comment</button>
+  <button (click)="OneEditComment( coment.id, coment.user_id)" *ngIf="currentUserId == coment.user_id"> Edit Comment</button>
+  <form #editCommentForm="ngForm" (ngSubmit)=eidtComment(editCommentForm.form.value) >
+    <textarea type="text" name="text"  ngModel></textarea>
+    <br>
+    <input type="submit" value="Send" ngModel>
+  </form>
+<!-- <form #editCommentForm="ngForm" (ngSubmit)=eidtComment(editCommentForm.form.value) *ngIf="showCommentForEdit[coment.id]">&ndash;&gt;-->
+<!--    <textarea type="text" name="text" placeholder="TEXT" required ngModel>{{coment.text}}</textarea>-->
+<!--    <br>-->
+<!--    <input type="submit" value="Send">-->
+<!--  </form>-->
+</div>
+<div *ngFor="let comment of newComment">
+  <p>{{comment.data| date:'dd.MM.y HH:mm'}}</p>
+  <p>{{comment.text}}</p>
+
+</div>
+<form #commentForm="ngForm" (ngSubmit)=createComment(commentForm.form.value) >
+  <textarea type="text" name="text" placeholder="TEXT" required ngModel></textarea>
+  <br>
+  <input type="submit" value="Send">
+</form>
+
+
+
+

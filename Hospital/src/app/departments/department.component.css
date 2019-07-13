@@ -1,0 +1,13 @@
+.Dep{
+  display: flex;
+}
+.departmets{
+  width: 200px ;
+  height: 20px;
+  border: 1px solid red;
+}
+.Doctors{
+  width: 100% ;
+  height: 70px;
+  border: 1px solid red;
+}

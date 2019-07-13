@@ -1,0 +1,10 @@
+<div *ngFor="let doctor of doctors">
+
+  <a [routerLink]="['/doctor',doctor.id]"> Ім'я:{{doctor.name}}</a>
+  <a [routerLink]="['/doctor',doctor.id]"> Прізвище: {{doctor.surname}}</a>
+  <p> Email: {{doctor.email}}</p>
+  <p> Мобільний номер:{{doctor.phone_number}}</p>
+  <p> Поверх:{{doctor.floor}}</p>
+  <p> Кабінет:{{doctor.office}}</p>
+
+</div>
