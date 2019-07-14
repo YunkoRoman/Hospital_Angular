@@ -5,7 +5,7 @@ import {Doctors} from "../interfaces/doctors";
 import {CommentsInterface} from "../interfaces/CommentsInterface"
 import {OneDoctorService} from "../services/one-doctor.service";
 import {AllCommentsService} from "../services/all-comments.service";
-import {FormControl} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { FormsModule } from '@angular/forms';
 import {CreateCommentService} from "../services/create-comment.service";
 import {UppdateCommentService} from "../services/uppdate-comment.service";
@@ -24,63 +24,76 @@ export class OneDoctorComponent implements OnInit, DoCheck {
   newComment:any =[];
   currentUserId: number;
   commentId: any;
+  loading : false;
+  createComment: FormGroup;
+  wiev: boolean;
   showCommentForEdit:any [] ;
-  
+
   constructor(public OneDoctorService: OneDoctorService,
               public AllComentService: AllCommentsService,
               public CreateCommentService:CreateCommentService,
               public UppdateCommentService: UppdateCommentService,
               public DeleteCommentService: DeleteCommentService,
-              private route: ActivatedRoute)
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              )
   
   {
-    // this.route.params.subscribe(params => {
-    //   this.doctorId = params.id
-    // });
+    this.route.params.subscribe(params => {
+      this.doctorId = params.id
+    });
     // this.OneDoctorService.getDoctor(this.doctorId).subscribe((data:Response) => {
     //   this.doctor = data.msg;
     // });
 
     this.AllComentService.getComments(this.doctorId).subscribe((data:Response) =>{
-      this.allcomments = data.msg;
+      console.log(this.allcomments = data.msg);
     });
-
+    this.wiev = true;
+    if (localStorage.getItem('user')) {
     const jsonStr = localStorage.getItem('user');
     const user = JSON.parse(jsonStr);
     this.currentUserId = user.id;
-
+    if (this.currentUserId != undefined) this.wiev = false;
+  }
   }
 
   ngOnInit(): void {
+    this.createComment = this.formBuilder.group({
+      text: ['', Validators.required],
 
+    });
   }
-
-  createComment(commentForm: CommentsInterface) {
-    commentForm.doctor_id = this.doctorId;
-    this.CreateCommentService.CreateComment(commentForm).subscribe((data:Response) => {
+  get f() { return this.createComment.controls; }
+  SendComment(){
+    const text = this.f.text.value;
+    const id = this.doctorId;
+    console.log(id);
+    this.CreateCommentService.CreateComment(text, id ).subscribe((data:Response) => {
+      console.log(data.msg);
       this.newComment.push(data.msg);
 
-      });
+     })
   }
 
-  eidtComment(editCommentForm: CommentsInterface) {
-    console.log(editCommentForm.id = this.commentId);
-    console.log(editCommentForm.id);
-    this.UppdateCommentService.UpdateComment(editCommentForm).subscribe((data:Response) => {
-      console.log(data.msg);
-
-  })}
-
-  OneEditComment(id: number, user_id: number) {
-    console.log(this.commentId = id);
-
-  }
-
-  DeleteComment(id: number) {
-    this.DeleteCommentService.DeleteComment(id).subscribe((data:Response)=> {
-      console.log(data.msg);
-    })
-  }
+  // eidtComment(editCommentForm: CommentsInterface) {
+  //   console.log(editCommentForm.id = this.commentId);
+  //   console.log(editCommentForm.id);
+  //   this.UppdateCommentService.UpdateComment(editCommentForm).subscribe((data:Response) => {
+  //     console.log(data.msg);
+  //
+  // })}
+  //
+  // OneEditComment(id: number, user_id: number) {
+  //   console.log(this.commentId = id);
+  //
+  // }
+  //
+  // DeleteComment(id: number) {
+  //   this.DeleteCommentService.DeleteComment(id).subscribe((data:Response)=> {
+  //     console.log(data.msg);
+  //   })
+  // }
 
   ngDoCheck(): void {
     this.route.params.subscribe(params => {

@@ -15,11 +15,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
   constructor(private AuthService:AuthService,
               private router:Router,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
               ) { }
 
   ngOnInit() {
@@ -29,21 +27,6 @@ export class LoginComponent implements OnInit {
     });
   }
   get f() { return this.loginForm.controls; }
-  // loginUser(loginForm: LoginInterface) {
-  //   this.AuthService.loginUser(loginForm).subscribe((data: Response) => {
-  //     this.success = data.success;
-  //     if (data.success) {
-  //       localStorage.setItem('token', data.msg);
-  //       const decoded = jwtDecode(data.msg);
-  //       console.log(decoded);
-  //
-  //       //parse
-  //       localStorage.setItem('user', JSON.stringify(decoded));
-  //     }
-  //   });
-  // }
-
-
 
   loginUser() {
     this.submitted = true;
@@ -53,8 +36,10 @@ export class LoginComponent implements OnInit {
           if (data.success) {
             localStorage.setItem('token', data.msg);
             const decoded = jwtDecode(data.msg);
+            localStorage.setItem('user', JSON.stringify(decoded));
             this.router.navigate(['']);
             console.log(decoded);
-  }})}
+  }})
+  }
 
 }

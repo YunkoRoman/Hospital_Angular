@@ -11,7 +11,7 @@ export class CreateCommentService {
   ) {
   }
 
-  CreateComment(comment) {
-    return this.http.post('http://localhost:3000/comment/create', {text: comment.text, doctor_id:comment.doctor_id})
+  CreateComment(text: string, doctor_id:number) {
+    return this.http.post('http://localhost:3000/comment/create', {text, doctor_id})
   }
 }
